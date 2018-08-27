@@ -1,5 +1,7 @@
 pragma solidity ^0.4.23;
 
+import "./StoreOwner.sol";
+
 contract OnlineMarketplace {
 
   //============================================================================
@@ -8,8 +10,9 @@ contract OnlineMarketplace {
   // the online marketplace administrators
   mapping(address => bool) public administrators;
 
-  // the online marketplace's storeowners
+  // the online marketplace's store owners & their corresponding contract address // blend into 1 mapping ?
   mapping(address => bool) public storeOwners;
+  mapping(address => address) public storeOwnersContracts;
 
 
   //============================================================================
@@ -20,7 +23,7 @@ contract OnlineMarketplace {
   event RemovedAdministrator(address _address);
 
   // events when adding or removing a store owner
-  event AddedStoreOwner(address _address);
+  event AddedStoreOwner(address _address, address _storeOwnerContractAddress);
   event RemovedStoreOwner(address _address);
 
 
@@ -56,11 +59,11 @@ contract OnlineMarketplace {
   function addAdministrator(address _address)
   public
   isAdministrator
-  returns (address)
+  returns (bool)
   {
     administrators[_address] = true;
     emit AddedAdministrator(_address);
-    return _address;
+    return true;
   }
 
   /**
@@ -69,11 +72,11 @@ contract OnlineMarketplace {
   function removeAdministrator(address _address)
   public
   isAdministrator
-  returns (address)
+  returns (bool)
   {
     administrators[_address] = false;
     emit RemovedAdministrator(_address);
-    return _address;
+    return true;
   }
 
   /**
@@ -82,11 +85,13 @@ contract OnlineMarketplace {
   function addStoreOwner(address _address)
   public
   isAdministrator
-  returns (address)
+  returns (bool)
   {
     storeOwners[_address] = true;
-    emit AddedStoreOwner(_address);
-    return _address;
+    StoreOwner storeOwnerContractAddress = new StoreOwner();
+    storeOwnerContractAddress.transferOwnership(_address);
+    emit AddedStoreOwner(_address, storeOwnerContractAddress);
+    return true;
   }
 
   /**
@@ -95,12 +100,12 @@ contract OnlineMarketplace {
   function removeStoreOwner(address _address)
   public
   isAdministrator
-  returns (address)
+  returns (bool)
   {
     storeOwners[_address] = false;
     // extra stuff ?
     emit RemovedStoreOwner(_address);
-    return _address;
+    return true;
   }
 
 }

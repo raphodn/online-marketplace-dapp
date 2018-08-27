@@ -42,7 +42,7 @@ contract('OnlineMarketplace', function(accounts) {
     }
   });
 
-  it('should not allow anyone to add an administrator', async() => {
+  it('should not allow a normal user to add an administrator', async() => {
     const onlineMarketplace = await OnlineMarketplace.deployed();
     try {
       await onlineMarketplace.addAdministrator(accounts[5], { from: accounts[2] });
@@ -52,10 +52,10 @@ contract('OnlineMarketplace', function(accounts) {
     }
   });
 
-  it('should not allow anyone to add a new store owner', async() => {
+  it('should not allow a normal user to add a new store owner', async() => {
     const onlineMarketplace = await OnlineMarketplace.deployed();
     try {
-      await onlineMarketplace.addStoreOwner(accounts[5], { from: accounts[2] });
+      const result = await onlineMarketplace.addStoreOwner(accounts[5], { from: accounts[2] });
     }
     catch(error) {
       assert(error, 'Expected an error but did not get one');
