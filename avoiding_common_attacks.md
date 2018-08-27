@@ -6,4 +6,15 @@ Info:
 
 ## Response
 
-Lack of time, did not take any specific measures except use the Owned inheritance contract.
+Lack of time, did not take overly complex measures.
+
+Nevertheless:
+- used the Owned inheritance contract
+- checked possible Reentrancy pitfalls
+- code is not timestamp dependant
+- no while loops
+
+To do/improve:
+- Integer management: Overflow and Underflow
+- possibility to kill contracts cleanly
+- contract fallback functions
