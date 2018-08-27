@@ -2,6 +2,10 @@ pragma solidity ^0.4.23;
 
 import "./StoreOwner.sol";
 
+/**
+ * @title Online Marketplace
+ * The initial state of the app, where administrators can create and edit users
+*/
 contract OnlineMarketplace {
 
   //============================================================================
@@ -54,7 +58,9 @@ contract OnlineMarketplace {
   // FUNCTIONS
 
   /**
-   * TODO
+   * @dev Add an administrator
+   * @param _address address of the user
+   * @return true if successful
    */
   function addAdministrator(address _address)
   public
@@ -67,7 +73,9 @@ contract OnlineMarketplace {
   }
 
   /**
-   * TODO
+   * @dev Remove an administrator
+   * @param _address address of the user
+   * @return true if successful
    */
   function removeAdministrator(address _address)
   public
@@ -80,7 +88,9 @@ contract OnlineMarketplace {
   }
 
   /**
-   * TODO
+   * @dev Add a store owner
+   * @param _address address of the user
+   * @return true if successful
    */
   function addStoreOwner(address _address)
   public
@@ -95,7 +105,9 @@ contract OnlineMarketplace {
   }
 
   /**
-   * TODO
+   * @dev Remove a store owner
+   * @param _address address of the user
+   * @return true if successful
    */
   function removeStoreOwner(address _address)
   public
