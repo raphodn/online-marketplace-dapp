@@ -1,6 +1,8 @@
 pragma solidity ^0.4.23;
 
-contract Store {
+import "./Owned.sol";
+
+contract Store is Owned {
 
   //============================================================================
   // VARIABLES
@@ -37,7 +39,6 @@ contract Store {
   //============================================================================
   // MODIFIERS
 
-  modifier verifyOwner() { require(msg.sender == storeOwner); _; }
   modifier checkProductExists(uint _productid) { require(products[_productid].productid > 0); _; }
   modifier checkProductAvailable(uint _productid) { require(products[_productid].quantity > 0); _; }
   modifier checkProductQuantityAvailable(uint _productid, uint _quantity) { require(products[_productid].quantity >= _quantity); _; }
@@ -49,7 +50,6 @@ contract Store {
   // CONSTRUCTOR
 
   constructor() public {
-    storeOwner = msg.sender;
     index = 1;
   }
 
@@ -62,11 +62,11 @@ contract Store {
    */
   function addProduct(bytes32 _name, uint _price, uint _quantity)
   public
-  verifyOwner
+  isOwner
   returns (bool)
   {
     products[index] = Product({ productid: index, name: _name, price: _price, quantity: _quantity });
-    emit AddedProduct(storeOwner, index, _price, _quantity);
+    emit AddedProduct(owner, index, _price, _quantity);
     index += 1;
     return true;
   }
@@ -76,13 +76,13 @@ contract Store {
    */
   function removeProduct(uint _productid)
   public
-  verifyOwner
+  isOwner
   checkProductExists(_productid)
   returns (bool)
   {
     Product storage currentProduct = products[_productid];
     delete products[_productid];
-    emit RemovedProduct(storeOwner, _productid, currentProduct.price, currentProduct.quantity);
+    emit RemovedProduct(owner, _productid, currentProduct.price, currentProduct.quantity);
     return true;
   }
 
@@ -91,7 +91,7 @@ contract Store {
    */
   function changeProductPrice(uint _productid, uint _newPrice)
   public
-  verifyOwner
+  isOwner
   checkProductExists(_productid)
   checkAmountPositive(_newPrice)
   returns (bool)
@@ -99,7 +99,7 @@ contract Store {
     /* Product storage currentProduct = products[_productid]; */
     uint _oldPrice = products[_productid].price;
     products[_productid].price = _newPrice;
-    emit UpdatedProductPrice(storeOwner, _productid, _oldPrice, _newPrice);
+    emit UpdatedProductPrice(owner, _productid, _oldPrice, _newPrice);
     return true;
   }
 
@@ -108,7 +108,7 @@ contract Store {
    */
   function changeProductQuantity(uint _productid, uint _newQuantity)
   public
-  verifyOwner
+  isOwner
   checkProductExists(_productid)
   checkAmountPositive(_newQuantity)
   returns (bool)
@@ -116,22 +116,7 @@ contract Store {
     /* Product storage currentProduct = products[_productid]; */
     uint _oldQuantity = products[_productid].quantity;
     products[_productid].quantity = _newQuantity;
-    emit UpdatedProductQuantity(storeOwner, _productid, _oldQuantity, _newQuantity);
-    return true;
-  }
-
-  /**
-   * TODO
-   */
-  function withdrawFunds()
-  public
-  verifyOwner
-  returns (bool)
-  {
-    uint _oldFunds = funds;
-    storeOwner.transfer(funds);
-    funds = 0;
-    emit WithdrewFunds(storeOwner, _oldFunds, funds);
+    emit UpdatedProductQuantity(owner, _productid, _oldQuantity, _newQuantity);
     return true;
   }
 
@@ -147,7 +132,22 @@ contract Store {
   {
     products[_productid].quantity -= 1;
     funds += products[_productid].price;
-    emit BoughtProduct(storeOwner, _productid, products[_productid].price, 1);
+    emit BoughtProduct(owner, _productid, products[_productid].price, 1);
+    return true;
+  }
+
+  /**
+   * TODO
+   */
+  function withdrawFunds()
+  public
+  isOwner
+  returns (bool)
+  {
+    uint _oldFunds = funds;
+    owner.transfer(funds);
+    funds = 0;
+    emit WithdrewFunds(owner, _oldFunds, funds);
     return true;
   }
 

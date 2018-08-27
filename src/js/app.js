@@ -22,12 +22,22 @@ App = {
   initContract: function() {
     $.getJSON('OnlineMarketplace.json', function(data) {
       // Get the necessary contract artifact file and instantiate it with truffle-contract
-      var OnlineMarketplaceArtifact = data
+      var OnlineMarketplaceArtifact = data;
       App.contracts.OnlineMarketplace = TruffleContract(OnlineMarketplaceArtifact);
       // Set the provider for our contract
-      App.contracts.Adoption.setProvider(App.web3Provider)
-      // Use our contract to retrieve and mark the adopted pets
-      return App.markAdopted()
+      App.contracts.OnlineMarketplace.setProvider(App.web3Provider);
+      return $.getJSON('StoreOwner.json');
+    }).then(function (data) {
+      var StoreOwnerArtifact = data;
+      App.contracts.StoreOwner = TruffleContract(StoreOwnerArtifact);
+      // Set the provider for our contract
+      App.contracts.StoreOwner.setProvider(App.web3Provider);
+      return $.getJSON('Store.json');
+    }).then(function (data) {
+      var StoreArtifact = data;
+      App.contracts.Store = TruffleContract(StoreArtifact);
+      // Set the provider for our contract
+      App.contracts.Store.setProvider(App.web3Provider);
     })
 
     return App.bindEvents();

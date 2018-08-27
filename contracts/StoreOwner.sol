@@ -8,8 +8,6 @@ contract StoreOwner is Owned {
   //============================================================================
   // VARIABLES
 
-  address owner;
-
   mapping(address => bool) public stores;
 
 
@@ -31,10 +29,11 @@ contract StoreOwner is Owned {
   isOwner
   returns(address)
   {
-    Store store = new Store();
-    stores[store] = true;
-    emit AddedStore(msg.sender, store);
-    return store;
+    Store storeContractAddress = new Store();
+    storeContractAddress.transferOwnership(owner);
+    stores[storeContractAddress] = true;
+    emit AddedStore(msg.sender, storeContractAddress);
+    return storeContractAddress;
   }
 
   /**
