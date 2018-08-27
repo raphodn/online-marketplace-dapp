@@ -4,7 +4,7 @@ import "./StoreOwner.sol";
 
 /**
  * @title Online Marketplace
- * The initial state of the app, where administrators can create and edit users
+ * @description The initial state of the app, where administrators can create and edit users
 */
 contract OnlineMarketplace {
 

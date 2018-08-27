@@ -3,6 +3,10 @@ pragma solidity ^0.4.23;
 import "./Owned.sol";
 import "./Store.sol";
 
+/**
+ * @title Store Owner
+ * @description Business logic to help a store owner manage his or her stores
+*/
 contract StoreOwner is Owned {
 
   //============================================================================
@@ -22,7 +26,8 @@ contract StoreOwner is Owned {
   // FUNCTIONS
 
   /**
-   * TODO
+   * @dev Add a store
+   * @return the store's contract address
    */
   function addStore()
   public
@@ -37,7 +42,9 @@ contract StoreOwner is Owned {
   }
 
   /**
-   * TODO
+   * @dev Remove a store
+   * @param _storeAddress the contract address of the store to be removed
+   * @return true if successful
    */
   function removeStore(address _storeAddress)
   public

@@ -2,17 +2,23 @@ pragma solidity ^0.4.23;
 
 import "./Owned.sol";
 
+/**
+ * @title Store
+ * @description Business logic to help a store owner manage a specific store,
+ * including managing the store's products and funds
+*/
 contract Store is Owned {
 
   //============================================================================
   // VARIABLES
 
+  // to keep track of the product count
   uint index;
 
-  address public storeOwner;
-
+  // the store's balance
   uint private funds;
 
+  // the store's Products
   mapping(uint => Product) public products;
 
   struct Product {
@@ -58,7 +64,11 @@ contract Store is Owned {
   // FUNCTIONS
 
   /**
-   * TODO
+   * @dev Add a product
+   * @param _name the product's name
+   * @param _price the product's initial price
+   * @param _quantity the product's initial quantity
+   * @return true if successful
    */
   function addProduct(bytes32 _name, uint _price, uint _quantity)
   public
@@ -72,7 +82,9 @@ contract Store is Owned {
   }
 
   /**
-   * TODO
+   * @dev Remove a product
+   * @param _productid the id of the product to be removed
+   * @return true if successful
    */
   function removeProduct(uint _productid)
   public
@@ -87,7 +99,10 @@ contract Store is Owned {
   }
 
   /**
-   * TODO
+   * @dev Change the price of a product
+   * @param _productid the id of the product to be modified
+   * @param _newPrice the new price of the product
+   * @return true if successful
    */
   function changeProductPrice(uint _productid, uint _newPrice)
   public
@@ -104,7 +119,10 @@ contract Store is Owned {
   }
 
   /**
-   * TODO
+   * @dev Change the quantity of a product
+   * @param _productid the id of the product to be modified
+   * @param _newQuantity the new quantity of the product
+   * @return true if successful
    */
   function changeProductQuantity(uint _productid, uint _newQuantity)
   public
@@ -121,7 +139,9 @@ contract Store is Owned {
   }
 
   /**
-   * TODO
+   * @dev Buy a product
+   * @param _productid the id of the product to be bought
+   * @return true if successful
    */
   function buyProduct(uint _productid)
   public
@@ -137,7 +157,8 @@ contract Store is Owned {
   }
 
   /**
-   * TODO
+   * @dev The store owner can withdraw the store's funds
+   * @return true if successful
    */
   function withdrawFunds()
   public
