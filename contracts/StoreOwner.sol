@@ -5,7 +5,7 @@ import "./Store.sol";
 
 /**
  * @title Store Owner
- * @description Business logic to help a store owner manage his or her stores
+ * Business logic to help a store owner manage his or her stores
 */
 contract StoreOwner is Owned {
 
