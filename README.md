@@ -1,5 +1,22 @@
 # Final Project: Online Marketplace
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+
+
+- [Understand](#understand)
+- [How-to run](#how-to-run)
+  - [Prerequisites](#prerequisites)
+  - [Run](#run)
+    - [Tests](#tests)
+    - [Frontend (nothing to see sadly)](#frontend-nothing-to-see-sadly)
+- [Additional info](#additional-info)
+  - [Design patterns decisions](#design-patterns-decisions)
+  - [Avoiding common attacks](#avoiding-common-attacks)
+  - [Future improvements](#future-improvements)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Understand
 
 A basic online marketplace where shoppers can view and buy products. A product belongs to a storefront, owned by a store owner.
@@ -54,6 +71,13 @@ see `design_pattern_decisions.md`
 
 see `avoiding_common_attacks.md`
 
-### Final note
+### Future improvements
 
 Due to a complete lack of time, I did not finish the frontend part, nor did I deploy it on IPFS. I nevertheless enjoyed designing and testing the different contracts. This code was done in less than a day, so it is probably not bug free (even though all the tests pass !)
+
+Some ideas I had:
+- add product image and description (stored on IPFS, hash stored in the blockchain)
+- possibility to tag and categorise products
+- store product createdAt and updatedAt timestamps for ordering choice in the frontend
+- feature to order a product in multiple quantity
+- MongoDB cache database to improve search functionality (instead of search through event logs)
